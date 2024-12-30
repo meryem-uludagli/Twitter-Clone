@@ -1,11 +1,14 @@
 import {
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import ForgotPassword from "./forgot-password";
 
 const Form = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -19,8 +22,12 @@ const Form = () => {
     onSubmit: ({ email, password }) => {
       if (isSignUp) {
         createUserWithEmailAndPassword(auth, email, password)
-          .then(() => {
-            toast.success("Your account has been created.");
+          .then((res) => {
+            sendEmailVerification(res.user);
+            toast.info(
+              "A verification email has been sent to your inbox, please check it."
+            );
+
             navigate("/feed");
           })
           .catch((err) => toast.error("Error:" + err.code));
@@ -52,6 +59,7 @@ const Form = () => {
           className="input"
           onChange={formik.handleChange}
         />
+        <ForgotPassword />
 
         <button className="mt-10 bg-white text-black rounded-full p-1 font-bold transition hover:bg-gray-300">
           {isSignUp ? "Sign up" : "Login"}
