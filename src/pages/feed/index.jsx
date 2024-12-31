@@ -1,17 +1,15 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import Aside from "./aside";
+import Nav from "./nav";
 
 const Feed = () => {
-  const handleClick = () =>
-    signOut(auth).then(() => toast.info("Logged out of the account"));
-
-  if (!auth.currentUser.emailVerified)
-    return <h1>YOU CANNOT VIEW THIS PAGE.</h1>;
   return (
-    <div>
-      <h1>Feed Page</h1>
-      <button onClick={handleClick}>Log out</button>
+    <div className="h-screen bg-black overflow-hidden text-white grid grid-cols-[1fr_minmax(300px,600px)_1fr]">
+      <Nav />
+      <Main />
+      <Aside />
     </div>
   );
 };
