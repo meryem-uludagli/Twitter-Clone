@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate, Navigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import PageLoader from "../loader/page-loader";
+import { toast } from "react-toastify";
 
 const Protected = () => {
   const [user, setUser] = useState(undefined);
@@ -16,7 +17,8 @@ const Protected = () => {
     return <PageLoader />;
   }
 
-  if (user === null) {
+  if (user === null || !user?.emailVerified) {
+    if (!user?.emailVerified) toast.info("Please verify your email address.");
     return <Navigate to="/" replace />;
   }
 

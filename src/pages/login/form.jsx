@@ -9,9 +9,11 @@ import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ForgotPassword from "./forgot-password";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Form = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -19,7 +21,7 @@ const Form = () => {
       email: "",
       password: "",
     },
-    onSubmit: ({ email, password }) => {
+    onSubmit: ({ email, password }, { resetForm }) => {
       if (isSignUp) {
         createUserWithEmailAndPassword(auth, email, password)
           .then((res) => {
@@ -28,7 +30,7 @@ const Form = () => {
               "A verification email has been sent to your inbox, please check it."
             );
 
-            navigate("/feed");
+            setIsSignUp(false);
           })
           .catch((err) => toast.error("Error:" + err.code));
       } else {
@@ -50,18 +52,32 @@ const Form = () => {
           name="email"
           className="input"
           onChange={formik.handleChange}
+          value={formik.values.email}
+          autoFocus
         />
 
         <label className="mt-5">Password</label>
-        <input
-          type="text"
-          name="password"
-          className="input"
-          onChange={formik.handleChange}
-        />
-        <ForgotPassword />
+        <div className="relative">
+          <input
+            type={showPass ? "text" : "password"}
+            name="password"
+            className="input w-full"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          <span
+            className="absolute end-3 text-black text-2xl  translate-y-[40%] cursor-pointer"
+            onClick={() => setShowPass(!showPass)}
+          >
+            {showPass ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+        {!isSignUp ? <ForgotPassword /> : <div className="h-[28px] w-1" />}
 
-        <button className="mt-10 bg-white text-black rounded-full p-1 font-bold transition hover:bg-gray-300">
+        <button
+          type="submit"
+          className="mt-10 bg-white text-black rounded-full p-1 font-bold transition hover:bg-gray-300"
+        >
           {isSignUp ? "Sign up" : "Login"}
         </button>
 
