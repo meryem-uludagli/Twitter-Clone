@@ -22,9 +22,7 @@ const Protected = () => {
     return <Navigate to="/" replace />;
   }
 
-  if (!user?.emailVerified) {
-  }
-  return <Outlet />;
+  return <Outlet context={user} />;
 };
 
 export default Protected;
