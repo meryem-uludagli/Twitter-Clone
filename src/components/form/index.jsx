@@ -1,10 +1,12 @@
-import { addDoc } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { FaRegSmile } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineGifBox } from "react-icons/md";
 import { toast } from "react-toastify";
+import { db } from "../../firebase";
+import uploadToStorage from "../../firebase/uploadToStorage";
 
 const Form = ({ user }) => {
   const [image, setImage] = useState(null);
@@ -31,13 +33,23 @@ const Form = ({ user }) => {
     if (!text && !file)
       return toast.warning("Please specify the content of the post.");
 
+    const imageUrl = await uploadToStorage(file);
+    return;
     const tweetsCol = collection(db, "tweets");
 
     await addDoc(tweetsCol, {
       content: {
         text,
-        image: undefined,
+        image: null,
       },
+      isEdited: false,
+      likes: [],
+      user: {
+        id: user.uid,
+        name: user.displayName,
+        photo: user.photoURL,
+      },
+      createdAt: serverTimestamp(),
     });
   };
   return (
