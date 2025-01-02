@@ -7,8 +7,10 @@ import { MdOutlineGifBox } from "react-icons/md";
 import { toast } from "react-toastify";
 import { db } from "../../firebase";
 import uploadToStorage from "../../firebase/uploadToStorage";
+import Loader from "../loader";
 
 const Form = ({ user }) => {
+  const [isLoading, setisLoading] = useState(false);
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -32,25 +34,33 @@ const Form = ({ user }) => {
 
     if (!text && !file)
       return toast.warning("Please specify the content of the post.");
+    try {
+      setisLoading(true);
+      const imageUrl = await uploadToStorage(file);
 
-    const imageUrl = await uploadToStorage(file);
-    return;
-    const tweetsCol = collection(db, "tweets");
+      const tweetsCol = collection(db, "tweets");
 
-    await addDoc(tweetsCol, {
-      content: {
-        text,
-        image: null,
-      },
-      isEdited: false,
-      likes: [],
-      user: {
-        id: user.uid,
-        name: user.displayName,
-        photo: user.photoURL,
-      },
-      createdAt: serverTimestamp(),
-    });
+      await addDoc(tweetsCol, {
+        content: {
+          text,
+          image: imageUrl,
+        },
+        isEdited: false,
+        likes: [],
+        user: {
+          id: user.uid,
+          name: user.displayName,
+          photo: user.photoURL,
+        },
+        createdAt: serverTimestamp(),
+      });
+
+      e.target.reset();
+      setImage(null);
+    } catch (error) {
+      console.log(error);
+    }
+    setisLoading(false);
   };
   return (
     <div className="border-b border-fourth p-4">
@@ -102,10 +112,11 @@ const Form = ({ user }) => {
             </button>
           </div>
           <button
+            disabled={isLoading}
             type="submit"
-            className="bg-secondary font-bold px-5 py-[6px] rounded-full text-primary tracking-wide hover:brightness-90"
+            className="bg-secondary font-bold px-5 py-[6px] rounded-full text-primary tracking-wide hover:brightness-90 min-w-[100px]"
           >
-            Send
+            {isLoading ? <Loader /> : "Send"}
           </button>
         </div>
       </form>
