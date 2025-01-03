@@ -25,7 +25,7 @@ const Main = ({ user }) => {
       <header className="border-b border-fourth p-4 font-bold ">Home</header>
       <Form user={user} />
       {!tweets ? (
-        <Loader designs="my-20" />
+        <Loader designs="my-20 scale-[1.2]" />
       ) : (
         tweets.map((tweet, key) => <Post key={key} tweet={tweet} />)
       )}
