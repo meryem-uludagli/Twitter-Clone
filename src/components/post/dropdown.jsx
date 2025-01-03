@@ -25,7 +25,7 @@ const Dropdown = ({ tweet }) => {
       <>
         <label className="popup">
           <input type="checkbox" ref={inputRef} />
-          <div className="burger" tabindex="0">
+          <div className="burger" tabIndex="0">
             <span></span>
             <span></span>
             <span></span>

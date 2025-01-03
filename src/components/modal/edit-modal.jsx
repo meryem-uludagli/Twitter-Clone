@@ -12,6 +12,7 @@ const EditModal = ({ isOpen, close, tweet }) => {
 
     const text = e.target[0].value;
     const file = e.target[1].files[0];
+
     const tweetRef = doc(db, "tweets", tweet.id);
 
     let updatedData = {
@@ -46,7 +47,7 @@ const EditModal = ({ isOpen, close, tweet }) => {
           defaultValue={tweet.content.text}
         />
 
-        <label className="mt-10 mb-2">"Add Photo /Change Photo"</label>
+        <label className="mt-10 mb-2">Add Photo / Change</label>
 
         {!isPicDeleting && tweet.content.image ? (
           <button
@@ -54,7 +55,7 @@ const EditModal = ({ isOpen, close, tweet }) => {
             className="bg-fourth p-1 rounded-md transition hover:bg-fourth/50"
             onClick={() => setIsPicDeleting(true)}
           >
-            Remove Image
+            Remove Photo
           </button>
         ) : (
           <input type="file" />
@@ -62,7 +63,7 @@ const EditModal = ({ isOpen, close, tweet }) => {
 
         <div className="flex justify-end gap-5 mt-10">
           <button type="button" onClick={close}>
-            Vazgeç
+            Cancel
           </button>
           <button
             type="submit"

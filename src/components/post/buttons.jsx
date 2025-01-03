@@ -10,7 +10,9 @@ const Buttons = ({ tweet }) => {
     const tweetRef = doc(db, "tweets", tweet.id);
 
     updateDoc(tweetRef, {
-      likes: isLiked ? arrayRemove(tweet.user.id) : arrayUnion(tweet.user.id),
+      likes: isLiked
+        ? arrayRemove(auth.currentUser.uid)
+        : arrayUnion(auth.currentUser.uid),
     });
   };
   return (

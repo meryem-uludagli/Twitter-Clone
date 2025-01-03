@@ -1,9 +1,15 @@
-# React + Vite
+# Twitter Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Developed a dynamic and responsive Twitter clone web application that replicates core features of Twitter, including tweet creation, real-time updates, user profiles, and media sharing. The application integrates Firebase for authentication, Firestore for database management, and Firebase Storage for media storage, providing a seamless and scalable solution for user interaction.
 
-Currently, two official plugins are available:
+# Key Features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# Twitter-Clone
+User Authentication: Implemented Firebase Authentication for secure and efficient user login and registration.
+Real-Time Data: Utilized Firestore's real-time capabilities to ensure instant updates across the app.
+Media Uploads: Integrated Firebase Storage for efficient image upload and management.
+Responsive UI: Designed an intuitive, mobile-friendly interface using React and Tailwind CSS for optimal user experience.
+This project highlights my expertise in full-stack development, Firebase integration, and building scalable web applications.
+
+# Gif
+
+![](./public/ScreenRecording2025-01-03at15.38.19-ezgif.com-video-to-gif-converter.gif)
