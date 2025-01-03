@@ -11,7 +11,7 @@ const Post = ({ tweet }) => {
       <div className="w-full">
         <div className="flex justify-between">
           <User tweet={tweet} />
-          <Dropdown />
+          <Dropdown tweet={tweet} />
         </div>
         <Content data={tweet.content} />
         <Buttons tweet={tweet} />
